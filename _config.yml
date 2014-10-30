@@ -45,7 +45,7 @@ timezone:      null
 title: Violet
 subTitle: Just another Jekyll blog.
 description: 这是 PIZn 的又一个博客，它是基于 Jekyll 搭建起来的。在这里，不仅仅是用来快速记录工作，学习，生活的一点一滴的地方，更是 PIZn 对 Jekyll 的学习和使用的一次有意义的实践。
-url: http://liaoyanxuan.github.io
+url: http://leoluffy.github.io
 feed: /atom.xml
 
 #菜单配置
@@ -57,9 +57,9 @@ nav:
   - text: 作品
     url: /works.html
   - text: 联系我
-    url: http://liaoyanxuan.github.io/contact.html
+    url: http://leoluffy.github.io/contact.html
   - text: 博客源代码
-    url: https://github.com/liaoyanxuan/liaoyanxuan.github.io
+    url: https://github.com/leoluffy/leoluffy.github.io
 
 #theme config
 themes: /themes/violet
@@ -74,25 +74,25 @@ headimg:
 #关注我
 follow:
   - class: fa-google-plus
-    url: http://www.liaoyanxuan.info
+    url: http://www.leoluffy.info
   - class: fa-facebook
-    url: http://www.liaoyanxuan.info
+    url: http://www.leoluffy.info
   - class: fa-github
     url: http://github.com/pizn
   - class: fa-weibo
     url: http://weibo.com/pizner
   - class: fa-renren
-    url: http://www.liaoyanxuan.info
+    url: http://www.leoluffy.info
   - class: fa-pinterest
-    url: http://www.liaoyanxuan.info
+    url: http://www.leoluffy.info
   - class: fa-twitter
-    url: http://www.liaoyanxuan.info
+    url: http://www.leoluffy.info
   - class: fa-rss
-    url: http://www.liaoyanxuan.info
+    url: http://www.leoluffy.info
 
 #作者信息
 author:
-  link: http://www.liaoyanxuan.info/contact.html
+  link: http://www.leoluffy.info/contact.html
   img: http://tp2.sinaimg.cn/1832671293/180/40020872447/1
 
 #评论信息
