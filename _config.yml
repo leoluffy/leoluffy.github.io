@@ -1,74 +1,105 @@
-#
-# This file contains configuration flags to customize your site
-#
+# Where things are
+source:       .
+destination:  ./_site
+plugins:      ./_plugins
+layouts:      ./_layouts
+paginate:     8
 
-# Name of your site (displayed in the header)
-name: Your Name
+# Handling Reading
+safe:         false
+include:      [".htaccess"]
+exclude:      []
+keep_files:   [".git", ".svn"]
+encoding:     "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+textile_ext:  "textile"
 
-# Short bio or description (displayed in the header)
-description: Web Developer from Somewhere
+# Filtering Content
+show_drafts:  null
+limit_posts:  0
+future:       true
+unpublished:  false
 
-# URL of your avatar or profile pic (you could use your GitHub profile pic)
-avatar: https://raw.githubusercontent.com/barryclark/jekyll-now/master/images/jekyll-logo.png
+# Conversion
+markdown: redcarpet2
+redcarpet:
+extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "with_toc_data"]
+pygments: true
+highlighter:  pygments
+lsi:          false
+excerpt_separator: "\n\n"
 
-#
-# Flags below are optional
-#
+# Serving
+detach:       false
+port:         4000
+host:         127.0.0.1
+baseurl:      "" # does not include hostname
 
-# Includes an icon in the footer for each username you enter
-footer-links:
-  dribbble: 
-  email: 
-  facebook: 
-  flickr: 
-  github: barryclark/jekyll-now
-  instagram: 
-  linkedin: 
-  pinterest: 
-  rss: # just type anything here for a working RSS icon, make sure you set the "url" above!
-  twitter: jekyllrb
-  stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
+# Outputting
+permalink:     date
+paginate_path: /page:num
+timezone:      null
 
-# Your disqus shortname, entering this will enable commenting on posts
-disqus: 
 
-# Enter your Google Analytics web tracking code (e.g. UA-2110908-2) to activate tracking
-google_analytics: 
+#站点基础配置
+title: Violet
+subTitle: Just another Jekyll blog.
+description: 这是 PIZn 的又一个博客，它是基于 Jekyll 搭建起来的。在这里，不仅仅是用来快速记录工作，学习，生活的一点一滴的地方，更是 PIZn 对 Jekyll 的学习和使用的一次有意义的实践。
+url: http://liaoyanxuan.github.io
+feed: /atom.xml
 
-# Your website URL (e.g. http://barryclark.github.io or http://www.barryclark.co)
-# Used for Sitemap.xml and your RSS feed
-url: 
+#菜单配置
+nav:
+  - text: 首页
+    url: /index.html
+  - text: 文章归档
+    url: /archives.html
+  - text: 作品
+    url: /works.html
+  - text: 联系我
+    url: http://liaoyanxuan.github.io/contact.html
+  - text: 博客源代码
+    url: https://github.com/liaoyanxuan/liaoyanxuan.github.io
 
-# If you're hosting your site at a Project repository on GitHub pages 
-# (http://yourusername.github.io/repository-name)
-# and NOT your User repository (http://yourusername.github.io)
-# then add in the baseurl here, like this: "/repository-name"
-baseurl: ""
+#theme config
+themes: /themes/violet
 
-#
-# !! You don't need to change any of the configuration flags below !!
-#
+#配置你喜欢的顶部背景图片
+headimg:
+  - item: /themes/violet/images/hdbg01.jpg
+  - item: /themes/violet/images/hdbg02.jpg
+  - item: /themes/violet/images/hdbg03.jpg
+  - item: /themes/violet/images/hdbg04.jpg
 
-markdown: kramdown
-highlighter: pygments
-permalink: /:title/
+#关注我
+follow:
+  - class: fa-google-plus
+    url: http://www.liaoyanxuan.info
+  - class: fa-facebook
+    url: http://www.liaoyanxuan.info
+  - class: fa-github
+    url: http://github.com/pizn
+  - class: fa-weibo
+    url: http://weibo.com/pizner
+  - class: fa-renren
+    url: http://www.liaoyanxuan.info
+  - class: fa-pinterest
+    url: http://www.liaoyanxuan.info
+  - class: fa-twitter
+    url: http://www.liaoyanxuan.info
+  - class: fa-rss
+    url: http://www.liaoyanxuan.info
 
-# The release of Jekyll Now that you're using
-version: v1.0.0
+#作者信息
+author:
+  link: http://www.liaoyanxuan.info/contact.html
+  img: http://tp2.sinaimg.cn/1832671293/180/40020872447/1
 
-# Set the Sass partials directory, as we're using @imports
-sass:
-  sass_dir: _scss
-  style: :expanded # You might prefer to minify using :compressed
+#评论信息
+disqus:
+  config: true
+  id: piznblog
 
-# Use the following plug-ins
-gems:
-  - jemoji # Emoji please!
-  - jekyll-sitemap # Create a sitemap using the official Jekyll sitemap gem
-
-# Exclude these files from your production _site
-exclude:
-    - Gemfile
-    - Gemfile.lock
-    - LICENSE
-    - README.md
+duoshuo:
+  config: false
+  id: zhanxin

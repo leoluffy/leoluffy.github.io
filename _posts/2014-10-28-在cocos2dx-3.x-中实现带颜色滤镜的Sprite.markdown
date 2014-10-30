@@ -1,0 +1,289 @@
+---
+layout: post
+title: 在cocos2dx 3.x 中实现带颜色滤镜的Sprite
+---
+**一.目的**
+
+cocos2dx做项目时经常会碰到要对图片进行变色的需求，最常用的就是变灰了，就要让按钮变灰来表示当前的状态是不可点的。
+但是cocos2dx的Sprite中是没有这个变灰支持的。那么，就要我们自己动手来扩展实现一个。我们让这个带变色功能的Sprite叫做FilterSprite。这个FilterSprite扩展了Sprite的功能：可以方便地变换颜色。
+
+**二.原理**
+
+对图片进行颜色变换，就是对图片上的每个像素进行变换。要实现这个，要新创建一个fragmentShader，这个fragmentShader
+比sprite的那个fragmentShader多了一个颜色变换矩阵。shader会让图片上每个像素与颜色变换矩阵进行相乘，输出新的像素值。
+
+这个shader是这样的：
+
+
+```c++
+	#ifdef GL_ES 
+	precision mediump float; 
+	#endif
+	uniform sampler2D u_texture; 
+	varying vec2 v_texCoord; 
+	varying vec4 v_fragmentColor; 
+	uniform mat4 fiterMat; 
+	void main(void) 
+	{ 
+	   vec4 value = v_fragmentColor*texture2D(u_texture, v_texCoord); 
+	   gl_FragColor = fiterMat*value; 
+	};
+```
+从shader上我们看到，“filterMat” 就是所谓的颜色变换矩阵，仅仅在原来像素输出前用它处理了一下：与待输出像素相乘。
+这个shader是opengl层级的，要应用到coco2dx引擎中，我们要着手实现cocos2dx的FilterSprite类了。
+
+**三.实现**
+
+实现这个FilterSprite注意几个要点：
+
+1. 引擎中一个shader对应一个GLProgram，所以这个带颜色滤镜的shader（称为filterShader）对应一个GLProgram（称为filterProgram）对象，在实际使用时，是用对GLProgram进行了封装的GLProgramState（称为filterProgramState）对象，FilterSprite对象的_glProgramState要设置成filterProgramState对象，在源码中FilterSprite的initWithTexture进行这个filterShader和filterProgram的关联。
+2. 在渲染时要将滤镜传递给shader程序，在源码中就是在onDraw回调时调用
+
+		glProgramState->setUniformMat4( "fiterMat",m_uSpriteFilter)。
+    
+
+
+**四.使用**
+
+使用起来非常简单，只需要设置一个颜色矩阵，例如，如果要变灰就设置一个灰度矩阵，如果要恢复原貌就设置一个单位矩阵。
+
+    Sprite *_sprite1;
+    _sprite1 = FilterSprite::create("Images/background3.png");
+	
+	GLfloat  filterMat[16]= {
+			0.3f,  0.3f,  0.3f,	 0.0f,
+			0.59f, 0.59f, 0.59f, 0.59f,
+			0.11f, 0.11f, 0.11f, 0.0f,
+			0.0f,  0.0f,  0.0f,  1.0f,
+	};
+
+	dynamic_cast<FilterSprite*>(_sprite1)->setFilterMat(filterMat);
+
+**五.源码**
+
+FilterSprite.h:
+    
+	/****************************************************************************
+	
+	 FilterSpirte.h
+	
+	 Created by LiaoYanXuan  on 14-10-21.
+	 ****************************************************************************/
+	
+	#ifndef __FilterSpirte_h
+	#define __FilterSpirte_h
+	
+	#include "cocos2d.h"
+	
+	USING_NS_CC;
+	
+	
+	class FilterSprite : public Sprite{
+	
+	public:
+	
+		FilterSprite();
+		virtual ~FilterSprite();
+	
+		static FilterSprite* create();
+		static FilterSprite* create(const std::string& filename);
+		static FilterSprite* create(const std::string& filename, const Rect& rect);
+	
+	
+		static FilterSprite* createWithTexture(Texture2D *pTexture);
+		static FilterSprite* createWithTexture(Texture2D *pTexture, const Rect& rect, bool rotated=false);
+		static FilterSprite* createWithSpriteFrame(SpriteFrame *pSpriteFrame);
+		static FilterSprite* createWithSpriteFrameName(const std::string& spriteFrameName);
+	
+		bool initWithTexture(Texture2D* pTexture, const Rect& tRect);
+		virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+		void onDraw(const Mat4 &transform, uint32_t flags);
+		void setFilterMat(cocos2d::Mat4 matrixArray);
+		//to-do 提供一个设置滤镜的方法
+	protected:
+		CustomCommand _customCommand;
+	private:
+		cocos2d::Mat4   m_uSpriteFilter;
+	};
+	
+	#endif
+
+	
+FilterSprite.cpp:
+
+	/****************************************************************************
+	 FilterSpirte.h
+	
+	 Created by LiaoYanXuan  on 14-10-21.
+	 ****************************************************************************/
+	#include "FilterSprite.h"
+	
+	FilterSprite::FilterSprite(void)
+	{
+		m_uSpriteFilter=Mat4::IDENTITY;
+	}
+	
+	FilterSprite::~FilterSprite()
+	{
+	
+	}
+	
+	FilterSprite* FilterSprite::create()
+	{
+		FilterSprite *sprite = new (std::nothrow) FilterSprite();
+		if (sprite && sprite->init())
+		{
+			sprite->autorelease();
+			return sprite;
+		}
+		CC_SAFE_DELETE(sprite);
+		return nullptr;
+	}
+	
+	FilterSprite* FilterSprite::create(const std::string& filename)
+	{
+		FilterSprite *sprite = new (std::nothrow) FilterSprite();
+		if (sprite && sprite->initWithFile(filename))
+		{
+			sprite->autorelease();
+			return sprite;
+		}
+		CC_SAFE_DELETE(sprite);
+		return nullptr;
+	}
+	
+	FilterSprite* FilterSprite::create(const std::string& filename, const Rect& rect)
+	{
+		FilterSprite *sprite = new (std::nothrow) FilterSprite();
+		if (sprite && sprite->initWithFile(filename, rect))
+		{
+			sprite->autorelease();
+			return sprite;
+		}
+		CC_SAFE_DELETE(sprite);
+		return nullptr;
+	}
+	
+	FilterSprite* FilterSprite::createWithTexture(Texture2D *pTexture)
+	{
+		FilterSprite *sprite = new (std::nothrow) FilterSprite();
+		Rect rect = Rect::ZERO;
+		rect.size = pTexture->getContentSize();
+		if (sprite && sprite->initWithTexture(pTexture,rect))
+		{
+			sprite->autorelease();
+			return sprite;
+		}
+		CC_SAFE_DELETE(sprite);
+		return nullptr;
+	}
+	
+	FilterSprite* FilterSprite::createWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
+	{
+		FilterSprite *sprite = new (std::nothrow) FilterSprite();
+		if (sprite && sprite->initWithTexture(texture, rect))
+		{
+			sprite->autorelease();
+			return sprite;
+		}
+		CC_SAFE_DELETE(sprite);
+		return nullptr;
+	}
+	
+	FilterSprite* FilterSprite::createWithSpriteFrame(SpriteFrame *spriteFrame)
+	{
+		FilterSprite *sprite = new (std::nothrow) FilterSprite();
+		if (sprite && spriteFrame && sprite->initWithSpriteFrame(spriteFrame))
+		{
+			sprite->autorelease();
+			return sprite;
+		}
+		CC_SAFE_DELETE(sprite);
+		return nullptr;
+	}
+	
+	FilterSprite* FilterSprite::createWithSpriteFrameName(const std::string& spriteFrameName)
+	{
+		SpriteFrame *frame = SpriteFrameCache::getInstance()->getSpriteFrameByName(spriteFrameName);
+	
+	#if COCOS2D_DEBUG > 0
+		char msg[256] = {0};
+		sprintf(msg, "Invalid spriteFrameName: %s", spriteFrameName.c_str());
+		CCASSERT(frame != nullptr, msg);
+	#endif
+	
+		return createWithSpriteFrame(frame);
+	}
+	
+	bool FilterSprite::initWithTexture(Texture2D* pTexture, const Rect& tRect){
+		do{
+			CC_BREAK_IF(!Sprite::initWithTexture(pTexture, tRect));
+	
+			GLchar* pszFragSource =
+				"#ifdef GL_ES \n \
+				precision mediump float; \n \
+				#endif \n \
+				uniform sampler2D u_texture; \n \
+				varying vec2 v_texCoord; \n \
+				varying vec4 v_fragmentColor; \n \
+				uniform mat4 fiterMat; \n \
+				void main(void) \n \
+				{ \n \
+				vec4 value = v_fragmentColor*texture2D(u_texture, v_texCoord); \n \
+				gl_FragColor = fiterMat*value; \n \
+				}";
+	
+			 auto glprogram = GLProgram::createWithByteArrays(ccPositionTextureColor_vert, pszFragSource);
+			 auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
+			 setGLProgramState(glprogramstate);
+	
+			 CHECK_GL_ERROR_DEBUG();
+	
+			 return true;
+		} while (0);
+		return false;
+	}
+	
+	void  FilterSprite::setFilterMat(cocos2d::Mat4 matrixArray)
+	{
+		m_uSpriteFilter=matrixArray;
+	}
+	
+	void FilterSprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+	{
+		_customCommand.init(_globalZOrder);
+		_customCommand.func = CC_CALLBACK_0(FilterSprite::onDraw, this, transform, flags);
+		renderer->addCommand(&_customCommand);
+	}
+	
+	void FilterSprite::onDraw(const Mat4 &transform, uint32_t flags)
+	{
+		 auto glProgramState = getGLProgramState();
+		 glProgramState->setUniformMat4("fiterMat",m_uSpriteFilter);
+		 glProgramState->apply(transform);
+	
+		GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+	
+		GL::bindTexture2D( _texture->getName() );
+		GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+	
+	#define kQuadSize sizeof(_quad.bl)
+		size_t offset = (size_t)&_quad;
+	
+		// vertex
+		int diff = offsetof( V3F_C4B_T2F, vertices);
+		glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+	
+		// texCoods
+		diff = offsetof( V3F_C4B_T2F, texCoords);
+		glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	
+		// color
+		diff = offsetof( V3F_C4B_T2F, colors);
+		glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+	
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	
+		CHECK_GL_ERROR_DEBUG();
+		CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
+	}
