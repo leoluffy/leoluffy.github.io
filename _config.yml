@@ -8,12 +8,12 @@ pygments: true
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : kailian blog
-tagline: kailian
+title : leoluffy blog
+tagline: leoluffy
 author :
-  name : kailian
-  email : kailian2010lin@gmail.com
-  github : kailian
+  name : leoluffy
+  email : leoluffy2010lin@gmail.com
+  github : leoluffy
   twitter : username
   feedburner : feedname
 
@@ -29,7 +29,7 @@ paginate_path: "/page:num"
 # Else if you are pushing to username.github.io, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-production_url : http://kailian.github.io
+production_url : http://leoluffy.github.io
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
 JB :
