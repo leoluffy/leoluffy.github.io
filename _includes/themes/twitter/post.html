@@ -1,0 +1,67 @@
+<div class="container post-container">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="post-title">
+      <strong>{{ page.title }}</strong>
+    </h1>
+    <small class="post-info">
+      <span class="glyphicon glyphicon-user icon-margin"></span>
+      {{ site.author.name }}
+      <span class="glyphicon glyphicon-time icon-margin"></span>
+      {{ page.date | date: "%F" }}
+    </small>    
+  </div>
+  <div class="panel-body">
+    <div class="blog-content">    
+      <div class="article-content">
+      {{ content }}
+      </div>
+      {% unless page.tags == empty %}
+        {% for tag in page.tags %} 
+          <span class="tag-box">
+            <a href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tag }}-ref" class="tag">
+              {{ tag }}<span class="sup">{{ site.tags[tag].size }}</span>
+            </a>
+          </span>
+        {% endfor %}
+      {% endunless %}
+    </div>
+
+    <div class="blog-center">
+      <ul class="pager">
+      {% if page.previous %}
+        <li class="previous"><a href="{{ BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}">&larr; 上一篇 {{ page.previous.title }}</a></li>
+      {% else %}
+        <li class="previous disabled"><a>&larr; 上一篇</a></li>
+      {% endif %}
+      {% if page.next %}
+        <li class="next"><a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}">{{page.next.title}} 下一篇 &rarr;</a></li>
+      {% else %}
+        <li class="next disabled"><a>下一篇 &rarr;</a>
+      {% endif %}
+      </ul>
+    </div>
+
+  </div>
+</div>
+<div id="comment"></div>
+<div class="ds-thread" data-thread-key="{{ page.url }}" data-title="{{ page.title }}" data-url="{{ site.production_url }}{{ page.url }}"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"kailianblog"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+</div>
+<footer class="blog-footer">
+  <div class="container blog-center">
+    Copyright &copy; 2014-{{ site.time | date: '%Y' }} <a href="https://github.com/kailian">{{ site.author.name }}</a> All Rights Reserved
+  </div>
+</footer>
+
+

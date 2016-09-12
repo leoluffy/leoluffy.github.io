@@ -1,0 +1,17 @@
+<div class="container">
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<span class="glyphicon glyphicon-align-justify icon-margin"></span>
+  	<strong>{{ page.title }}</strong>{% if page.tagline %} <small>{{ page.tagline }}</small>{% endif %}
+  </div>
+  <div class="panel-body">
+	{{ content }}
+  </div>
+</div>
+</div>
+<footer class="blog-footer">
+  <div class="container blog-center">
+    Copyright &copy; 2014-{{ site.time | date: '%Y' }} <a href="https://github.com/kailian">{{ site.author.name }}</a> All Rights Reserved
+  </div>
+</footer>
+
