@@ -10,7 +10,7 @@ body, html {
 #blog-container {
   margin: 0 auto;
   padding: 0;
-  background-image: url(/images/snowf.jpg);
+  background-image: url(/images/blog_bg.png);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: bottom left
@@ -148,7 +148,7 @@ blockquote {
 @media only screen and (max-width:700px) {
   .maruku_toc, #markdown-toc {
     display: none;
-  } 
+  }
 }
 
 .article-margin {
@@ -165,13 +165,13 @@ blockquote {
 }
 
 .show-icon-margin {
-  font-size: 11px; 
+  font-size: 11px;
   margin-left: 10px;
   color: #999;
 }
 
 .show-icon-margin a {
-  color: #999; 
+  color: #999;
 }
 
 .alert-margin {
@@ -207,7 +207,7 @@ blockquote {
   padding: 3px 8px 3px 8px;
   margin: 0 3px 3px 0;
   background: #e6eaed;
-  color: #07b;  
+  color: #07b;
   font-size: 11px;
   line-height: 20px;
   vertical-align: middle;
@@ -229,55 +229,55 @@ blockquote {
 @media only screen and (max-width:800px) {
   .v-fork-me {
     display: none;
-  } 
+  }
 }
 
 /**
  * 返回顶部
  */
 .back-to a {
-  color: #3354aa; 
+  color: #3354aa;
   text-decoration: none;
-  border-bottom: 0px; 
+  border-bottom: 0px;
   border-left: 0px;
-  padding-bottom: 0px; 
-  margin: 0px; 
+  padding-bottom: 0px;
+  margin: 0px;
   outline-style: none;
-  outline-color: invert; 
-  padding-left: 0px; 
-  outline-width: 0px; 
+  outline-color: invert;
+  padding-left: 0px;
+  outline-width: 0px;
   padding-right: 0px;
   background: none transparent scroll repeat 0% 0%;
   font-size: 100%;
   vertical-align: baseline;
-  border-top: 0px; 
+  border-top: 0px;
   border-right: 0px;
   padding-top: 0px
 }
 
 .back-to a:hover {
-  border-bottom: medium none; 
+  border-bottom: medium none;
   color: #444
 }
 
 .back-to {
-  z-index: 999; 
-  position: fixed; 
-  width: 110px; 
-  bottom: 35px; 
-  overflow: hidden; 
+  z-index: 999;
+  position: fixed;
+  width: 110px;
+  bottom: 35px;
+  overflow: hidden;
   right: 10px
 }
 
 .back-to .back-top {
-  text-indent: -9999em; 
-  outline-style: none; 
-  outline-color: invert; 
-  outline-width: 0px; 
-  width: 50px; 
-  display: block; 
+  text-indent: -9999em;
+  outline-style: none;
+  outline-color: invert;
+  outline-width: 0px;
+  width: 50px;
+  display: block;
   background: url(/images/back-top.png) no-repeat 0px 0px;
-  float: right; 
+  float: right;
   height: 50px;
   margin-left: 10px
 }
