@@ -5,7 +5,8 @@ title: 'Mac下安装NMP环境'
 tagline: ""
 tags : [PHP]
 ---
-
+* auto-gen TOC:
+{:toc}
 
 ## 安装 brew
 
