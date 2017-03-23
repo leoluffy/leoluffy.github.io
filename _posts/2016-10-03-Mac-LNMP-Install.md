@@ -6,10 +6,8 @@ tagline: ""
 tags : [PHP]
 ---
 
-* auto-gen TOC:
-{:toc}
 
-##安装 brew
+## 安装 brew
 
 Brew 是 Mac 下面的包管理工具，通过 Github 托管适合 Mac 的编译配置以及 Patch，可以方便的安装开发工具。 Mac 自带ruby 所以安装起来很方便，同时它也会自动把git也给你装上。 [跳转到brew官方网站](http://brew.sh)
 
@@ -24,16 +22,16 @@ homebrew的常用命令:
 2. brew search pkg_name #搜索相关的包信息  
 3. brew install pkg_name #安装包  
 
-##安装nginx  
+## 安装nginx  
   
-####使用brew安装nginx
+#### 使用brew安装nginx
 
 ```
 brew install nginx --with-http2
 
 ```
 
-####ngnix配置
+#### ngnix配置
 配置目录：/usr/local/etc/nginx/  
 nginx.conf
 
@@ -117,8 +115,8 @@ alias nginx_start="sudo nginx"
 alias nginx_reload="sudo nginx -s reload"
 source /etc/profile 
 ```
-##安装PHP
-####使用brew安装php
+## 安装PHP
+#### 使用brew安装php
 添加brew的PHP扩展库：
 
 ```
@@ -224,7 +222,7 @@ source /etc/profile
 
 ```
 
-##安装mysql
+## 安装mysql
 
 ```
 brew install mysql
@@ -248,7 +246,7 @@ vim /etc/profile
 alias con_mysql="mysql -uroot -p密码"
 source /etc/profile 
 ```
-##安装composer
+## 安装composer
 
 ```
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -260,7 +258,7 @@ composer -V
 composer config -g repo.packagist composer https://packagist.phpcomposer.com
 ```
 
-##安装memcached软件
+## 安装memcached软件
 
 ```
 brew install memcached
@@ -270,7 +268,7 @@ alias memcached_start="/usr/local/opt/memcached/bin/memcached -d -m 64 -c 4096 -
 alias memcached_stop="pkill -9 memcached"
 source /etc/profile 
 ```
-##安装php7.0 memcached扩展
+## 安装php7.0 memcached扩展
 ```
 brew install --HEAD homebrew/php/php70-memcached
 ```
@@ -279,13 +277,4 @@ brew install --HEAD homebrew/php/php70-memcached
 ```
 session.save_handler = memcached
 session.save_path = "127.0.0.1:11210"
-```
-####使用淘宝 NPM 镜像
-大家都知道国内直接使用 npm 的官方镜像是非常慢的，这里推荐使用淘宝 NPM 镜像。  
-淘宝 NPM 镜像是一个完整 npmjs.org 镜像，你可以用此代替官方版本(只读)，同步频率目前为 10分钟 一次以保证尽量与官方服务同步。
-你可以使用淘宝定制的 cnpm (gzip 压缩支持) 命令行工具代替默认的 npm:
-
-```
-npm install -g cnpm --registry=https://registry.npm.taobao.org 
-
 ```
