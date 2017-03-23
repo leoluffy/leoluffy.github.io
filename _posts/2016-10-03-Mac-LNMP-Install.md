@@ -17,7 +17,7 @@ Brew 是 Mac 下面的包管理工具，通过 Github 托管适合 Mac 的编译
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-homebrew的常用命令:  
+#### homebrew的常用命令:  
 
 1. brew update #更新可安装包的最新信息，建议每次安装前都运行下  
 2. brew search pkg_name #搜索相关的包信息  
@@ -33,8 +33,7 @@ brew install nginx --with-http2
 ```
 
 #### ngnix配置
-配置目录：/usr/local/etc/nginx/  
-nginx.conf
+配置目录：/usr/local/etc/nginx/nginx.conf
 
 ```
 user  www www;
@@ -101,14 +100,14 @@ http
 }
 
 ```
-启动nginx
+#### 启动nginx
 
 ```
 sudo nginx
 sudo nginx -t
 sudo nginx -s reload
 ```
-自定义nginx启动命令
+#### 自定义nginx启动命令
 
 ```
 vim /etc/profile 
@@ -207,10 +206,7 @@ Zend Engine v3.0.0, Copyright (c) 1998-2016 Zend Technologies
 PATH="/usr/local/sbin:$PATH"
 
 ```
-加入开机启动
-
-
-自定义php-fpm的启动命令  
+#### 自定义php-fpm的启动命令  
 
 ```
 sudo php-fpm -D # 启动
@@ -224,13 +220,13 @@ source /etc/profile
 ```
 
 ## 安装mysql
-
+#### 使用brew安装mysql
 ```
 brew install mysql
 chown -R mysql:mysql /usr/local/var/mysql
 chmod -R 755 /usr/local/var/mysql
 ```
-自定义mysql的启动命令
+#### 自定义mysql的启动命令
 
 ```
 vim /etc/profile 
@@ -240,7 +236,7 @@ alias mysql_restart="mysql_stop && mysql_start"
 source /etc/profile 
 
 ```
-自定义连接mysql命令
+#### 自定义进入mysql命令
 
 ```
 vim /etc/profile 
@@ -255,25 +251,32 @@ php composer-setup.php
 mv composer.phar /usr/local/bin/composer
 ##查看当前composer版本
 composer -V
-##使用中国镜像，修改composer的全局配置文件，全局生效
+```
+#### 使用composer中国镜像
+```
+##修改composer的全局配置文件，全局生效
 composer config -g repo.packagist composer https://packagist.phpcomposer.com
 ```
 
 ## 安装memcached软件
+#### 使用brew安装memcached
 
 ```
 brew install memcached
-##设置自定义启动和关闭命令
+```
+#### 设置自定义启动和关闭命令
+```
 vim /etc/profile 
 alias memcached_start="/usr/local/opt/memcached/bin/memcached -d -m 64 -c 4096 -p 11210 -u www -t 10 && /usr/local/opt/memcached/bin/memcached -d -m 256 -c 4096 -p 11211 -u www -t 10"
 alias memcached_stop="pkill -9 memcached"
 source /etc/profile 
 ```
 ## 安装php7.0 memcached扩展
+#### 使用brew安装memcached扩展
 ```
 brew install --HEAD homebrew/php/php70-memcached
 ```
-设置将session存储到memcached
+#### 设置将session存储到memcached
 
 ```
 session.save_handler = memcached
