@@ -17,7 +17,7 @@ Brew 是 Mac 下面的包管理工具，通过 Github 托管适合 Mac 的编译
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
-#### homebrew的常用命令:  
+#### homebrew的常用命令 
 
 1. brew update #更新可安装包的最新信息，建议每次安装前都运行下  
 2. brew search pkg_name #搜索相关的包信息  
