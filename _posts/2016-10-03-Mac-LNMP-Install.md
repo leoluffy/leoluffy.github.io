@@ -90,12 +90,6 @@ http
 
 #################  include  ###################
 
-   server
-    {
-        listen 80;
-        server_name empty;
-        root /data/web/webclose;
-    }
     include vhost/*.conf;
 }
 
