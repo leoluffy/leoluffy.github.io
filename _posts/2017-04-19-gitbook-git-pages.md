@@ -24,8 +24,8 @@ Installing GitBook 3.2.2
 
 ```
 
-创建一个文档仓库，并clone到本地  
-我的仓库内容包含了一个git目录，git目录下有一份git开发流程文档
+* 创建一个文档仓库，并clone到本地  
+* 我的仓库内容包含了一个git目录，git目录下有一份git开发流程文档
 
 ```
 yuyongjiadeMacBook-Pro:dev-guide-doc yuyongjia$ git clone https://git.xxx.com/git/web-doc/dev-guide-doc.git
@@ -46,10 +46,10 @@ info: create SUMMARY.md
 info: initialization is finished 
 
 ```
-成功初始化之后，会在工作目录生成SUMMARY.md和README.md文件  
-这里git是我放文档的子目录，看起来也会自动在每个子目录下创建README文件  
-SUMMARY.md是书籍的目录结构   
-README.md 文件是书籍的介绍  
+* 成功初始化之后，会在工作目录生成SUMMARY.md和README.md文件  
+* 这里git是我放文档的子目录，看起来也会自动在每个子目录下创建README文件  
+* SUMMARY.md是书籍的目录结构   
+* README.md 文件是书籍的介绍  
 
 编辑SUMMARY.md
 
