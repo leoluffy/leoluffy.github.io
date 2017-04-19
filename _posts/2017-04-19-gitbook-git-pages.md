@@ -128,7 +128,7 @@ git checkout --orphan gh-pages
 cp -rf _book/* .
 ##添加所有文件
 git add *
-git commit -m "【开发】提交pages文件"
+git commit . -m "【开发】提交pages文件"
 git push origin gh-pages
 
 ```
