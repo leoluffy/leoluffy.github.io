@@ -107,7 +107,8 @@ done
 
 git remote add origin $GIT_REPO
 git checkout master
-git pull --rebase origin master
+##因为本地和远程是两个不同的项目，要把两个不同的项目合并，git需要添加一句代码，在git pull，这句代码是在git 2.9.2版本发生的，最新的版本需要添加--allow-unrelated-histories
+git pull origin master --allow-unrelated-histories
 git push origin --all
 
 ```
