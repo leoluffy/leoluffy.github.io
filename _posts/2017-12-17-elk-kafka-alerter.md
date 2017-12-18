@@ -10,7 +10,7 @@ tags : [elk,kafka]
 
 # 基于ELK+Kafka的错误/异常告警服务
 ## 业务架构图
-![](/images/post/alert-structure.jpg)
+![](/images/post/alert-structure.png)
 ## 业务需求
 1. 各业务系统统一上报错误/异常日志到日志收集服务集群
 2. 监控这些错误日志，做一个统一的告警服务
