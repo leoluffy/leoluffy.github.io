@@ -1,6 +1,6 @@
 ---
 layout: post
-category : GIT
+category : ELK
 title: '基于ELK+Kafka的错误/异常告警服务'
 tagline: ""
 tags : [elk,kafka]
@@ -8,7 +8,6 @@ tags : [elk,kafka]
 * auto-gen TOC:
 {:toc}
 
-# 基于ELK+Kafka的错误/异常告警服务
 ## 业务架构图
 ![](/images/post/alert-structure.png)
 ## 业务需求
