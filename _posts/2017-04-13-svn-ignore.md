@@ -16,6 +16,8 @@ export SVN_EDITOR=vim
 source ~/.bash_profile
 ```
 
+<!--break-->
+
 忽略template_c下的所有文件
 
 ```

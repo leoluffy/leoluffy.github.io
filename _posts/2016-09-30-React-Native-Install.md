@@ -18,6 +18,8 @@ React Native中文网的安装说明文档:[搭建开发环境](http://reactnati
 2、IOS的环境搭建好后,切换到项目根目录,直接执行react-native run-ios,成功拉起IOS版的demo界面
   
 3、Android踩了个坑,根据文档安装完所有步骤后，执行react-native run-android，这时报了个错误：
+
+<!--break-->
     
     :app:assembleDebug UP-TO-DATE
     :app:installDebug FAILED
@@ -37,7 +39,7 @@ React Native中文网的安装说明文档:[搭建开发环境](http://reactnati
     Could not install the app on the device, read the error above for details.
     Make sure you have an Android emulator running or a device connected and have
     set up your Android development environment:
-    https://facebook.github.io/react-native/docs/android-setup.html
+    https://facebook.github.io/react-native/docs/android-setup.html 
 
 看了一下报错内容,原来是要先启动emulator,于是执行emulator的启动命令:  
 

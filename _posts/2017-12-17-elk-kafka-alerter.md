@@ -15,6 +15,8 @@ tags : [elk,kafka]
 2. 监控这些错误日志，做一个统一的告警服务
 3. 因为不想造轮子，所以打算使用较为成熟的ELK开源方案，日志收集这部分我们自己做了，ELK主要用于告警服务的日志检索服务
 
+<!--break-->
+
 ## ELK版本选择
 本来打算安装最新的release版本，因为新版中的x-pack，支持的功能更加丰富：Security, alerting, monitoring, reporting, machine learning & Graph   
 但由于我们的kafka的版本是0.9.0，而最新版的logstash-input-kafka组件不兼容kafka的0.9.0版本，所以最终决定和公司运维部使用统一的版本
@@ -379,3 +381,144 @@ supervisor>
 [http://www.supervisord.org/](http://www.supervisord.org/)
 
 
+字符串超过默认值256不会被索引
+https://www.elastic.co/guide/en/elasticsearch/reference/2.4/ignore-above.html#ignore-above
+
+indices-put-mapping
+https://www.elastic.co/guide/en/elasticsearch/reference/2.4/indices-put-mapping.html
+
+修改mapping配置
+
+```
+curl -XPUT 'localhost:9200/logstash-app-error-*/_mapping/logs?pretty' -H 'Content-Type: application/json' -d'
+{
+  "properties": {
+    "logs": {
+      "properties" : {
+        "detail" : {
+          "type" : "string",
+          "norms" : {
+            "enabled" : false
+          },
+          "fielddata" : {
+            "format" : "disabled"
+          },
+          "fields" : {
+            "raw" : {
+              "type" : "string",
+              "index" : "not_analyzed",
+              "ignore_above" : 32766
+            }
+          }
+        },
+        "summary" : {
+          "type" : "string",
+          "norms" : {
+            "enabled" : false
+          },
+          "fielddata" : {
+            "format" : "disabled"
+          },
+          "fields" : {
+            "raw" : {
+              "type" : "string",
+              "index" : "not_analyzed",
+              "ignore_above" : 32766
+            }
+          }
+        }
+      }
+    }
+  }
+}
+'
+```
+
+### 创建indices-templates模板
+https://www.elastic.co/guide/en/elasticsearch/reference/2.4/indices-templates.html
+
+```
+curl -XPUT 'localhost:9200/_template/logstash-app-error?pretty' -H 'Content-Type: application/json' -d'
+{
+    "order": 1,
+    "template": "logstash-app-error-*",
+    "settings": {
+        "index": {
+            "refresh_interval": "5s"
+        }
+    },
+    "mappings": {
+        "_default_": {
+            "dynamic_templates": [
+                {
+                    "message_field": {
+                        "mapping": {
+                            "fielddata": {
+                                "format": "disabled"
+                            },
+                            "index": "analyzed",
+                            "omit_norms": true,
+                            "type": "string"
+                        },
+                        "match_mapping_type": "string",
+                        "match": "message"
+                    }
+                },
+                {
+                    "string_fields": {
+                        "mapping": {
+                            "fielddata": {
+                                "format": "disabled"
+                            },
+                            "index": "analyzed",
+                            "omit_norms": true,
+                            "type": "string",
+                            "fields": {
+                                "raw": {
+                                    "ignore_above": 32766,
+                                    "index": "not_analyzed",
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "match_mapping_type": "string",
+                        "match": "*"
+                    }
+                }
+            ],
+            "_all": {
+                "omit_norms": true,
+                "enabled": true
+            },
+            "properties": {
+                "@timestamp": {
+                    "type": "date"
+                },
+                "geoip": {
+                    "dynamic": true,
+                    "properties": {
+                        "ip": {
+                            "type": "ip"
+                        },
+                        "latitude": {
+                            "type": "float"
+                        },
+                        "location": {
+                            "type": "geo_point"
+                        },
+                        "longitude": {
+                            "type": "float"
+                        }
+                    }
+                },
+                "@version": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "aliases": {}
+}
+'
+```

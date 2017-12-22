@@ -35,6 +35,8 @@ yuyongjiadeMacBook-Pro:dev-guide-doc yuyongjia$ ls git/
 git-flow.md  
 ```
 
+<!--break-->
+
 gitbook init初始化
 
 ```

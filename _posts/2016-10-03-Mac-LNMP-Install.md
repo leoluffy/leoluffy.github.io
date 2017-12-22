@@ -23,6 +23,8 @@ Brew 是 Mac 下面的包管理工具，通过 Github 托管适合 Mac 的编译
 2. brew search pkg_name #搜索相关的包信息  
 3. brew install pkg_name #安装包  
 
+<!--break-->
+
 ## 安装nginx  
   
 #### 使用brew安装nginx
