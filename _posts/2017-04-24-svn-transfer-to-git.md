@@ -100,7 +100,6 @@ do
     mkdir -p www/template_c
     echo "${EMPTY_IGNORE}" > www/template_c/.gitignore
     rm -f composer.lock
-    $SED -i "/mcweb\//{s/mcweb/mcweb-deps/g}" composer.json
     git add .
     git commit . -m'【开发】初始化一些具体业务'
     echo $branch
